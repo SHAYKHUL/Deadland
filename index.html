@@ -37,10 +37,10 @@
       align-items: center;
       justify-content: space-between; /* Navigation at top, main content center, footer at bottom */
       text-align: center;
-      min-height: 100vh;
+      height: 100vh; /* Force exact viewport height */
       padding: 1rem;
       animation: fadeIn 2s ease-in-out;
-      overflow-x: hidden;
+      overflow: hidden; /* Prevent scrolling */
     }
     @keyframes fadeIn {
       from { opacity: 0; }
