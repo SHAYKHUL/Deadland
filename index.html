@@ -1,143 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dead Land - Home</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dead Land - Home</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'VT323', monospace;
-            color: white;
-            text-align: center;
-            background: black;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            animation: fadeIn 2s ease-in-out;
-        }
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
 
-        /* Fade-in effect */
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
+    body {
+      font-family: 'VT323', monospace;
+      background: black;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+      animation: fadeIn 2s ease-in-out;
+    }
 
-        /* Background Image */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('background.png') no-repeat center center/cover;
-            filter: brightness(30%);
-            z-index: -1;
-        }
+    /* Fade-in Animation */
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
 
-        /* Centered Container */
-        .container {
-            position: relative;
-            max-width: 600px;
-            padding: 20px;
-            text-align: center;
-            z-index: 2;
-        }
+    /* Background Image */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('background.png') no-repeat center center/cover;
+      filter: brightness(30%);
+      z-index: -1;
+    }
 
-        /* Logo */
-        .logo {
-            width: 250px;
-            margin-bottom: 30px;
-            filter: drop-shadow(0 0 10px red);
-            transition: transform 0.3s ease;
-        }
+    /* Centered Container for Logo and Button */
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 2;
+    }
 
-        .logo:hover {
-            transform: scale(1.05);
-        }
+    /* Logo Styling */
+    .logo {
+      width: 60%;
+      max-width: 300px;
+      margin-bottom: 30px;
+      filter: drop-shadow(0 0 10px red);
+      transition: transform 0.3s ease;
+    }
+    .logo:hover {
+      transform: scale(1.05);
+    }
 
-        /* Start Game Button */
-        .start-button {
-            padding: 15px 30px;
-            background: red;
-            color: white;
-            font-size: 20px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
-            transition: all 0.3s ease;
-        }
+    /* Start Game Button Styling */
+    .start-button {
+      padding: 15px 30px;
+      background: red;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .start-button:hover {
+      transform: scale(1.1);
+      background: rgba(255, 0, 0, 0.8);
+    }
+    .start-button:focus {
+      outline: 2px solid yellow;
+      outline-offset: 4px;
+    }
 
-        .start-button:hover {
-            transform: scale(1.1);
-            background: rgba(255, 0, 0, 0.8);
-        }
+    /* Whisper Effect */
+    .whisper {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.5);
+      animation: whisperEffect 3s infinite alternate;
+    }
+    @keyframes whisperEffect {
+      0% { opacity: 0.3; }
+      100% { opacity: 0.8; }
+    }
 
-        .start-button:focus {
-            outline: 2px solid yellow;
-            outline-offset: 4px;
-        }
+    /* Responsive Styles */
+    @media (max-width: 1024px) {
+      .logo {
+        width: 70%;
+        max-width: 250px;
+      }
+      .start-button {
+        font-size: 1.8rem;
+        padding: 12px 24px;
+      }
+    }
 
-        /* Whisper Effect */
-        .whisper {
-            position: fixed;
-            bottom: 10px;
-            left: 10px;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
-            opacity: 0.3;
-            animation: whisperEffect 3s infinite alternate;
-        }
+    @media (max-width: 768px) {
+      .logo {
+        width: 80%;
+        max-width: 220px;
+      }
+      .start-button {
+        font-size: 1.6rem;
+        padding: 10px 20px;
+      }
+      .whisper {
+        font-size: 0.9rem;
+      }
+    }
 
-        @keyframes whisperEffect {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.8; }
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 600px) {
-            .container {
-                padding: 15px;
-                max-width: 90%;
-            }
-
-            .logo {
-                width: 200px;
-            }
-
-            .start-button {
-                font-size: 18px;
-                padding: 12px 24px;
-            }
-        }
-    </style>
+    @media (max-width: 480px) {
+      .logo {
+        width: 90%;
+        max-width: 180px;
+      }
+      .start-button {
+        font-size: 1.4rem;
+        padding: 8px 16px;
+      }
+      .whisper {
+        font-size: 0.8rem;
+        bottom: 5px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- Centered Container: Logo on top, Start Button below -->
+  <div class="container">
+    <img src="deadland-logo.png" alt="Dead Land Logo" class="logo" />
+    <button class="start-button" onclick="startGame()">Start Game</button>
+  </div>
 
-    <!-- Home Menu Content -->
-    <div class="container">
-        <!-- Logo -->
-        <img src="deadland-logo.png" alt="Dead Land Logo" class="logo">
-        
-        <!-- Start Game Button -->
-        <button class="start-button" onclick="startGame()">Start Game</button>
-    </div>
+  <!-- Eerie Whisper Text -->
+  <div class="whisper" id="whisperText">
+    Are you ready to face the challenge...
+  </div>
 
-    <div class="whisper" id="whisperText">Are you ready to face the challenge...</div>
-
-    <script>
-        function startGame() {
-            window.location.href = 'game.html'; // Change 'game.html' to your game page's URL
-        }
-    </script>
-
+  <script>
+    function startGame() {
+      window.location.href = 'game.html'; // Change this URL as needed
+    }
+  </script>
 </body>
 </html>
