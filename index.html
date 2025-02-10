@@ -3,11 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dead Land - Home</title>
+  <title>Dead Land - Mobile Friendly</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-    /* Base & Reset Styles */
+    /* CSS Variables for consistent color management */
+    :root {
+      --primary-color: #ff0000;
+      --primary-dark: #d40000;
+      --accent-color: red;
+      --text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+      --box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+      --modal-bg: #222;
+      --modal-border: #ff0000;
+    }
+
+    /* Reset & Base Styles */
     * {
       margin: 0;
       padding: 0;
@@ -20,23 +31,24 @@
       font-family: 'VT323', monospace;
       background: black;
       color: white;
-      overflow: hidden;
       position: relative;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
+      /* Change from space-between to flex-start to remove extra top gap */
+      justify-content: flex-start;
       text-align: center;
       min-height: 100vh;
+      padding: 1rem;
       animation: fadeIn 2s ease-in-out;
+      overflow-x: hidden;
     }
-
-    /* Fade-in Animation */
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
 
-    /* Background Image */
+    /* Background Image with Dark Overlay */
     body::before {
       content: "";
       position: absolute;
@@ -49,66 +61,58 @@
       z-index: -1;
     }
 
-    /* Centered Container for Logo and Button */
+    /* Navigation Bar */
+    .navbar {
+      width: 100%;
+      padding: 0.5rem 1rem;
+      background: rgba(0, 0, 0, 0.7);
+      border-bottom: 1px solid var(--primary-color);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      font-size: 1rem;
+    }
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .nav-links li a:hover {
+      color: var(--accent-color);
+    }
+
+    /* Header / Tagline */
+    .tagline {
+      margin: 1rem 0;
+    }
+    .tagline h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+    }
+    .tagline p {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Main Content Container */
     .container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      z-index: 2;
-      width: 90%;
-      max-width: 600px;
-      margin: auto;
+      gap: 1.5rem;
+      padding: 1rem;
+      width: 100%;
+      max-width: 400px;
+      /* Removed margin: auto so content stays at the top */
     }
-
-    /* Logo Styling */
-    .logo {
-      width: 80%;
-      max-width: 300px;
-      margin-bottom: 2rem;
-      filter: drop-shadow(0 0 10px red);
-      transition: transform 0.3s ease;
-    }
-    .logo:hover {
-      transform: scale(1.05);
-    }
-
-    /* Improved Start Game Button Styling */
-    .start-button {
-      padding: 1rem 2rem;
-      background: linear-gradient(45deg, #ff0000, #d40000);
-      border: none;
-      border-radius: 0.625rem;
-      color: #fff;
-      font-size: 1.5rem;
-      cursor: pointer;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
-      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .start-button:hover {
-      transform: scale(1.1);
-      background: linear-gradient(45deg, #ff4d4d, #e60000);
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.9);
-    }
-    .start-button:focus {
-      outline: none;
-      box-shadow: 0 0 15px rgba(255, 255, 0, 0.8), 0 0 30px rgba(255, 255, 0, 0.5);
-    }
-    .start-button:active {
-      transform: scale(0.98);
-      box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.7);
-    }
-
-    /* Eerie Whisper Effect */
+    /* Whisper Text placed at the top inside the container */
     .whisper {
-      position: absolute;
-      bottom: 1rem;
-      left: 1rem;
-      font-size: 1rem;
+      font-size: 0.9rem;
       color: rgba(255, 255, 255, 0.5);
       animation: whisperEffect 3s infinite alternate;
     }
@@ -117,7 +121,63 @@
       to { opacity: 0.8; }
     }
 
-    /* 18+ Disclaimer Modal Styles */
+    /* Logo Styling */
+    .logo {
+      width: 100%;
+      max-width: 200px;
+      filter: drop-shadow(0 0 8px var(--primary-color));
+      transition: transform 0.3s ease;
+    }
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    /* Start Game Button Styling */
+    .start-button {
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
+      border: none;
+      border-radius: 0.5rem;
+      color: #fff;
+      font-size: 1.3rem;
+      cursor: pointer;
+      text-shadow: var(--text-shadow);
+      box-shadow: var(--box-shadow);
+      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .start-button:hover {
+      transform: scale(1.1);
+      background: linear-gradient(45deg, #ff4d4d, #e60000);
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.9);
+    }
+    .start-button:focus {
+      outline: none;
+      box-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
+    }
+    .start-button:active {
+      transform: scale(0.98);
+      box-shadow: inset 0 0 8px rgba(255, 0, 0, 0.7);
+    }
+
+    /* Footer */
+    .footer {
+      width: 100%;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      border-top: 1px solid var(--primary-color);
+      /* Push footer to the bottom if there is extra space */
+      margin-top: auto;
+    }
+    .footer a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .footer a:hover {
+      color: var(--accent-color);
+    }
+
+    /* 18+ Disclaimer Modal */
     .modal {
       position: fixed;
       top: 0;
@@ -139,48 +199,49 @@
       pointer-events: auto;
     }
     .modal-content {
-      background: #222;
-      border: 0.125rem solid #ff0000;
-      padding: 2rem;
-      border-radius: 0.625rem;
+      background: var(--modal-bg);
+      border: 2px solid var(--modal-border);
+      padding: 1.5rem;
+      border-radius: 0.5rem;
       text-align: center;
-      max-width: 400px;
       width: 100%;
+      max-width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
     .modal-content h2 {
-      margin-bottom: 1.25rem;
-      font-size: 2rem;
+      font-size: 1.5rem;
     }
     .modal-content p {
-      margin-bottom: 1.875rem;
-      font-size: 1.125rem;
-      line-height: 1.5;
+      font-size: 1rem;
+      line-height: 1.4;
     }
     .modal-buttons {
       display: flex;
+      gap: 0.5rem;
       justify-content: center;
-      gap: 1rem;
       flex-wrap: wrap;
     }
     .modal-buttons button {
-      padding: 0.75rem 1.5rem;
+      padding: 0.5rem 1rem;
       font-size: 1rem;
       border: none;
-      border-radius: 0.3125rem;
+      border-radius: 0.3rem;
       cursor: pointer;
       transition: transform 0.2s ease;
       flex: 1 1 auto;
-      max-width: 150px;
+      max-width: 120px;
     }
     .modal-accept {
-      background: red;
+      background: var(--primary-color);
       color: white;
-      box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+      box-shadow: 0 0 8px rgba(255, 0, 0, 0.7);
     }
     .modal-decline {
       background: grey;
       color: white;
-      box-shadow: 0 0 10px rgba(128, 128, 128, 0.7);
+      box-shadow: 0 0 8px rgba(128, 128, 128, 0.7);
     }
     .modal-buttons button:hover {
       transform: scale(1.05);
@@ -189,72 +250,54 @@
       transform: scale(0.95);
     }
 
-    /* Responsive Adjustments */
-    @media (max-width: 1024px) {
-      .start-button {
-        font-size: 1.4rem;
-        padding: 0.875rem 1.75rem;
-      }
-      .logo {
-        max-width: 250px;
-      }
-    }
-    @media (max-width: 768px) {
-      html {
-        font-size: 15px;
-      }
-      .start-button {
-        font-size: 1.3rem;
-        padding: 0.75rem 1.5rem;
-      }
-      .logo {
-        max-width: 220px;
-      }
-      .whisper {
-        font-size: 0.9rem;
-        bottom: 0.75rem;
-        left: 0.75rem;
-      }
-    }
-    @media (max-width: 480px) {
-      html {
-        font-size: 14px;
-      }
-      .start-button {
-        font-size: 1.2rem;
-        padding: 0.65rem 1.25rem;
-      }
-      .logo {
-        max-width: 180px;
-      }
-      .whisper {
-        font-size: 0.8rem;
-        bottom: 0.5rem;
-        left: 0.5rem;
-      }
-      .modal-content {
-        padding: 1.5rem;
-      }
-      .modal-content h2 {
-        font-size: 1.75rem;
-      }
-      .modal-content p {
-        font-size: 1rem;
-      }
+    /* Extra adjustments for very small devices */
+    @media (max-width: 360px) {
+      html { font-size: 14px; }
+      .tagline h1 { font-size: 1.6rem; }
+      .start-button { font-size: 1.1rem; padding: 0.6rem 1.2rem; }
+      .logo { max-width: 180px; }
+      .footer { font-size: 0.8rem; }
+      .modal-content { max-width: 260px; }
     }
   </style>
 </head>
 <body>
-  <!-- Centered Container: Logo on top, Start Button below -->
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Credits</a></li>
+      <li><a href="#">Settings</a></li>
+    </ul>
+  </nav>
+
+  <!-- Header / Tagline -->
+  <header class="tagline">
+    <h1>Enter the Darkness</h1>
+    <p>Experience horror and survival on the go</p>
+  </header>
+
+  <!-- Main Content Container -->
   <div class="container">
+    <!-- Whisper text now inside the container at the top -->
+    <div class="whisper" id="whisperText">
+      Are you ready to face the challenge...
+    </div>
     <img src="deadland-logo.png" alt="Dead Land Logo" class="logo" />
     <button class="start-button" onclick="showModal()">Start Game</button>
   </div>
 
-  <!-- Eerie Whisper Text -->
-  <div class="whisper" id="whisperText">
-    Are you ready to face the challenge...
-  </div>
+  <!-- Footer with Social Links -->
+  <footer class="footer">
+    <p>
+      Follow us:
+      <a href="#">Twitter</a> |
+      <a href="#">Instagram</a> |
+      <a href="#">YouTube</a>
+    </p>
+    <p>&copy; 2025 Dead Land. All Rights Reserved.</p>
+  </footer>
 
   <!-- 18+ Disclaimer Modal -->
   <div id="modal" class="modal">
@@ -273,13 +316,11 @@
     function showModal() {
       document.getElementById('modal').classList.add('active');
     }
-
-    // Accept button navigates to game page
+    // Navigate to the game page if accepted
     document.getElementById('accept-button').addEventListener('click', function() {
       window.location.href = 'game.html'; // Adjust URL as needed
     });
-
-    // Decline button closes the modal
+    // Close the modal if declined
     document.getElementById('decline-button').addEventListener('click', function() {
       document.getElementById('modal').classList.remove('active');
     });
