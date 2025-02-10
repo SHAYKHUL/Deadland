@@ -7,35 +7,33 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-    /* Reset & Base Styles */
+    /* Base & Reset Styles */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
-    html, body {
-      height: 100%;
-      width: 100%;
+    html {
+      font-size: 16px;
     }
-
     body {
       font-family: 'VT323', monospace;
       background: black;
       color: white;
+      overflow: hidden;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      overflow: hidden;
-      position: relative;
+      min-height: 100vh;
       animation: fadeIn 2s ease-in-out;
     }
 
     /* Fade-in Animation */
     @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     /* Background Image */
@@ -57,15 +55,18 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 1.5rem;
       z-index: 2;
+      width: 90%;
+      max-width: 600px;
+      margin: auto;
     }
 
     /* Logo Styling */
     .logo {
-      width: 60%;
+      width: 80%;
       max-width: 300px;
-      margin-bottom: 30px;
+      margin-bottom: 2rem;
       filter: drop-shadow(0 0 10px red);
       transition: transform 0.3s ease;
     }
@@ -73,79 +74,172 @@
       transform: scale(1.05);
     }
 
-    /* Start Game Button Styling */
+    /* Improved Start Game Button Styling */
     .start-button {
-      padding: 15px 30px;
-      background: red;
+      padding: 1rem 2rem;
+      background: linear-gradient(45deg, #ff0000, #d40000);
       border: none;
-      border-radius: 10px;
-      color: white;
-      font-size: 2rem;
+      border-radius: 0.625rem;
+      color: #fff;
+      font-size: 1.5rem;
       cursor: pointer;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
       box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
-      transition: transform 0.3s ease, background 0.3s ease;
+      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
     .start-button:hover {
       transform: scale(1.1);
-      background: rgba(255, 0, 0, 0.8);
+      background: linear-gradient(45deg, #ff4d4d, #e60000);
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.9);
     }
     .start-button:focus {
-      outline: 2px solid yellow;
-      outline-offset: 4px;
+      outline: none;
+      box-shadow: 0 0 15px rgba(255, 255, 0, 0.8), 0 0 30px rgba(255, 255, 0, 0.5);
+    }
+    .start-button:active {
+      transform: scale(0.98);
+      box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.7);
     }
 
-    /* Whisper Effect */
+    /* Eerie Whisper Effect */
     .whisper {
       position: absolute;
-      bottom: 10px;
-      left: 10px;
+      bottom: 1rem;
+      left: 1rem;
       font-size: 1rem;
       color: rgba(255, 255, 255, 0.5);
       animation: whisperEffect 3s infinite alternate;
     }
     @keyframes whisperEffect {
-      0% { opacity: 0.3; }
-      100% { opacity: 0.8; }
+      from { opacity: 0.3; }
+      to { opacity: 0.8; }
     }
 
-    /* Responsive Styles */
+    /* 18+ Disclaimer Modal Styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 1rem;
+    }
+    .modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-content {
+      background: #222;
+      border: 0.125rem solid #ff0000;
+      padding: 2rem;
+      border-radius: 0.625rem;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    .modal-content h2 {
+      margin-bottom: 1.25rem;
+      font-size: 2rem;
+    }
+    .modal-content p {
+      margin-bottom: 1.875rem;
+      font-size: 1.125rem;
+      line-height: 1.5;
+    }
+    .modal-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .modal-buttons button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 0.3125rem;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      flex: 1 1 auto;
+      max-width: 150px;
+    }
+    .modal-accept {
+      background: red;
+      color: white;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+    }
+    .modal-decline {
+      background: grey;
+      color: white;
+      box-shadow: 0 0 10px rgba(128, 128, 128, 0.7);
+    }
+    .modal-buttons button:hover {
+      transform: scale(1.05);
+    }
+    .modal-buttons button:active {
+      transform: scale(0.95);
+    }
+
+    /* Responsive Adjustments */
     @media (max-width: 1024px) {
+      .start-button {
+        font-size: 1.4rem;
+        padding: 0.875rem 1.75rem;
+      }
       .logo {
-        width: 70%;
         max-width: 250px;
       }
-      .start-button {
-        font-size: 1.8rem;
-        padding: 12px 24px;
-      }
     }
-
     @media (max-width: 768px) {
-      .logo {
-        width: 80%;
-        max-width: 220px;
+      html {
+        font-size: 15px;
       }
       .start-button {
-        font-size: 1.6rem;
-        padding: 10px 20px;
+        font-size: 1.3rem;
+        padding: 0.75rem 1.5rem;
+      }
+      .logo {
+        max-width: 220px;
       }
       .whisper {
         font-size: 0.9rem;
+        bottom: 0.75rem;
+        left: 0.75rem;
       }
     }
-
     @media (max-width: 480px) {
-      .logo {
-        width: 90%;
-        max-width: 180px;
+      html {
+        font-size: 14px;
       }
       .start-button {
-        font-size: 1.4rem;
-        padding: 8px 16px;
+        font-size: 1.2rem;
+        padding: 0.65rem 1.25rem;
+      }
+      .logo {
+        max-width: 180px;
       }
       .whisper {
         font-size: 0.8rem;
-        bottom: 5px;
+        bottom: 0.5rem;
+        left: 0.5rem;
+      }
+      .modal-content {
+        padding: 1.5rem;
+      }
+      .modal-content h2 {
+        font-size: 1.75rem;
+      }
+      .modal-content p {
+        font-size: 1rem;
       }
     }
   </style>
@@ -154,7 +248,7 @@
   <!-- Centered Container: Logo on top, Start Button below -->
   <div class="container">
     <img src="deadland-logo.png" alt="Dead Land Logo" class="logo" />
-    <button class="start-button" onclick="startGame()">Start Game</button>
+    <button class="start-button" onclick="showModal()">Start Game</button>
   </div>
 
   <!-- Eerie Whisper Text -->
@@ -162,10 +256,33 @@
     Are you ready to face the challenge...
   </div>
 
+  <!-- 18+ Disclaimer Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h2>18+ Warning</h2>
+      <p>This game is intended for mature audiences only. Please confirm that you are 18 years or older.</p>
+      <div class="modal-buttons">
+        <button id="accept-button" class="modal-accept">Yes, I am 18+</button>
+        <button id="decline-button" class="modal-decline">Cancel</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    function startGame() {
-      window.location.href = 'game.html'; // Change this URL as needed
+    // Display the modal when "Start Game" is clicked
+    function showModal() {
+      document.getElementById('modal').classList.add('active');
     }
+
+    // Accept button navigates to game page
+    document.getElementById('accept-button').addEventListener('click', function() {
+      window.location.href = 'game.html'; // Adjust URL as needed
+    });
+
+    // Decline button closes the modal
+    document.getElementById('decline-button').addEventListener('click', function() {
+      document.getElementById('modal').classList.remove('active');
+    });
   </script>
 </body>
 </html>
