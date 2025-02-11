@@ -37,10 +37,10 @@
       align-items: center;
       justify-content: space-between; /* Navigation at top, main content center, footer at bottom */
       text-align: center;
-      min-height: 100vh;
+      height: 100vh; /* Exact viewport height */
       padding: 1rem;
       animation: fadeIn 2s ease-in-out;
-      overflow-x: hidden;
+      overflow: hidden; /* Prevent scrolling */
     }
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -58,6 +58,31 @@
       background: url('background.png') no-repeat center center/cover;
       filter: brightness(30%);
       z-index: -1;
+    }
+    
+    /* Background Video */
+    .background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      filter: brightness(30%); /* Darkens the video */
+    }
+    
+    /* Smoke Video Overlay */
+    .smoke-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.5; /* Adjust for blending effect */
+      mix-blend-mode: screen; /* Allows video to blend naturally */
     }
 
     /* Navigation Bar */
@@ -259,6 +284,14 @@
   </style>
 </head>
 <body>
+<!-- Background Smoke Video -->
+  <video class="background-video" autoplay loop muted>
+    <source src="background.mp4" type="video/mp4">
+  </video>
+
+  <video class="smoke-overlay" autoplay loop muted>
+    <source src="https://video.wixstatic.com/video/d47472_58cce06729c54ccb935886c4b3647274/1080p/mp4/file.mp4" type="video/mp4">
+  </video>
   <!-- Navigation Bar -->
   <nav class="navbar">
     <ul class="nav-links">
@@ -308,10 +341,20 @@
     </div>
   </div>
 
+  <!-- Background Music (hidden audio element) -->
+  <audio id="bg-music" src="bg-music.mp3" loop></audio>
+
   <script>
-    // Display the modal when "Start Game" is clicked
+    // Display the modal when "Start Game" is clicked and start playing background music
     function showModal() {
       document.getElementById('modal').classList.add('active');
+      // Try playing the background music (requires user interaction)
+      var bgMusic = document.getElementById('bg-music');
+      if (bgMusic.paused) {
+        bgMusic.play().catch(function(e) {
+          console.log('Background music playback failed: ', e);
+        });
+      }
     }
     // Navigate to the game page if accepted
     document.getElementById('accept-button').addEventListener('click', function() {
