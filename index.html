@@ -59,6 +59,31 @@
       filter: brightness(30%);
       z-index: -1;
     }
+    
+    /* Background Video */
+    .background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      filter: brightness(30%); /* Darkens the video */
+    }
+    
+    /* Smoke Video Overlay */
+    .smoke-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.5; /* Adjust for blending effect */
+      mix-blend-mode: screen; /* Allows video to blend naturally */
+    }
 
     /* Navigation Bar */
     .navbar {
@@ -259,6 +284,15 @@
   </style>
 </head>
 <body>
+<!-- Background Smoke Video -->
+  <video class="background-video" autoplay loop muted>
+    <source src="background.mp4" type="video/mp4">
+  </video>
+
+  <video class="smoke-overlay" autoplay loop muted>
+    <source src="https://video.wixstatic.com/video/d47472_58cce06729c54ccb935886c4b3647274/1080p/mp4/file.mp4" type="video/mp4">
+  </video>
+  
   <!-- Navigation Bar -->
   <nav class="navbar">
     <ul class="nav-links">
