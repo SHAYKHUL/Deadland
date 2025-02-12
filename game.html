@@ -82,7 +82,7 @@
             padding: 10px;
             border-left: 3px solid red;
             border-radius: 5px;
-            text-align: center;
+                        text-align: center;
         }
 
         /* Task Details */
@@ -139,11 +139,15 @@
     <div class="game-container">
         <h1 class="task-title" id="taskTitle">Welcome to Dead Land</h1>
         <img src="room.png" alt="Task Image" class="task-image" id="taskImage">
-        <p class="task-text" id="taskText">Click "Entire" to begin.</p>
-        <p class="task-details" id="taskDetails">They game is based on a true story.A lonely boy, frustrated and isolated, lived in an old house. He was last seen in his room in 2016, staring into a mirror. Days later, he was found dead. No one knows what happened, but some say the mirror holds his final moments. Now, you have found his diary, and the tasks he left behind…
-
-Each task represents a fragment of his tragic story, forcing the player to experience what he went through before his final moments.</p>
-        <button class="action-button" id="nextTask">Entire the room</button>
+        <p class="task-text" id="taskText">Click "Enter" to begin.</p>
+        <p class="task-details" id="taskDetails">
+            The game is based on a true story. A lonely boy, frustrated and isolated, lived in an old house. 
+            He was last seen in his room in 2016, staring into a mirror. Days later, he was found dead. No one knows what happened, 
+            but some say the mirror holds his final moments. Now, you have found his diary, and the tasks he left behind…
+            <br><br>
+            Each task represents a fragment of his tragic story, forcing the player to experience what he went through before his final moments.
+        </p>
+        <button class="action-button" id="nextTask">Enter the Room</button>
     </div>
 
     <!-- Background Music -->
@@ -156,20 +160,32 @@ Each task represents a fragment of his tragic story, forcing the player to exper
             {
                 title: "Task 1: The Mirror Test",
                 text: "Find a mirror and look into your eyes.",
-                details: "Year: 2016. A boy stood before the mirror in his room, staring into his own eyes. He had no one to talk to. The mirror was his only friend. He whispered secrets to it, but one night, the reflection whispered back. He was never the same again.Stand in front of a mirror and stare into your reflection for at least 30 seconds. Notice how you feel. The goal is to become more self-aware and acknowledge your presence. Do you recognize yourself?",
+                details: "Year: 2016. A boy stood before the mirror in his room, staring into his own eyes. He had no one to talk to. The mirror was his only friend. He whispered secrets to it, but one night, the reflection whispered back. He was never the same again.<br><br>Your task: Stand in front of a mirror and stare into your reflection for at least 30 seconds. Notice how you feel. The goal is to become more self-aware and acknowledge your presence. Do you recognize yourself?",
                 image: "task1.png"
             },
             {
                 title: "Task 2: The Secret Note",
                 text: "Write something about yourself.",
-                details: "Find a piece of paper and write down one personal thought or memory. It can be something positive or something hidden in your past. Keep this note somewhere safe or destroy it.",
+                details: "He started writing in a diary. Pages filled with his deepest thoughts, fears, and regrets. He wrote about shadows in his room, whispers from the walls, and the feeling of something watching him. One night, he found a page he didn’t write...<br><br>Your task: Find a piece of paper and write down one personal thought or memory. It can be something positive or something hidden in your past. Keep this note somewhere safe or destroy it.",
                 image: "task2.png"
             },
             {
-                title: "Task 3: Deep Breathing",
+                title: "Task 3: The Breathing Ritual",
                 text: "Take slow, deep breaths for 60 seconds.",
-                details: "Sit in a quiet place and inhale deeply for 5 seconds, hold for 3 seconds, and exhale for 7 seconds. Repeat this for a full minute. Feel your heartbeat slow down and your mind clear.",
+                details: "One night, he tried to calm himself. He focused on his breathing, but with every exhale, the whispers grew louder. He was never alone...<br><br>Your task: Sit in a quiet place and inhale deeply for 5 seconds, hold for 3 seconds, and exhale for 7 seconds. Repeat this for a full minute. Focus on how your body feels.",
                 image: "task3.png"
+            },
+            {
+                title: "Task 4: The Reflection",
+                text: "Record yourself speaking, then listen to it.",
+                details: "He once recorded his voice to hear how he sounded. But when he played it back, there was another voice... whispering.<br><br>Your task: Record yourself saying something—anything. Then, play it back. Listen carefully. Do you hear yourself the same way you imagine?",
+                image: "task4.png"
+            },
+            {
+                title: "Task 5: The Whisper",
+                text: "Listen closely. Do you hear it?",
+                details: "He often heard whispers, but one night, they called his name. And when he turned around... there was nothing there.<br><br>Your task: Put on headphones and sit in silence for a minute. Listen to the sounds around you. Focus. What do you hear?",
+                image: "task5.png"
             }
         ];
 
@@ -183,9 +199,9 @@ Each task represents a fragment of his tragic story, forcing the player to exper
 
         function loadNextTask() {
             if (index < tasks.length) {
-                taskTitle.innerText = tasks[index].title;
-                taskText.innerText = tasks[index].text;
-                taskDetails.innerText = tasks[index].details;
+                taskTitle.innerHTML = tasks[index].title;
+                taskText.innerHTML = tasks[index].text;
+                taskDetails.innerHTML = tasks[index].details;
                 taskImage.src = tasks[index].image;
                 nextTaskButton.innerText = "Next Task";
                 index++;
@@ -204,3 +220,4 @@ Each task represents a fragment of his tragic story, forcing the player to exper
 
 </body>
 </html>
+
