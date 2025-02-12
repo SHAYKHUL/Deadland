@@ -360,5 +360,18 @@
       document.getElementById('modal').classList.remove('active');
     });
   </script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    let audio = document.getElementById("background-music");
+
+    // Attempt to play after a user interaction
+    document.body.addEventListener("click", function() {
+      if (audio.paused) {
+        audio.play().catch(error => console.log("Autoplay prevented:", error));
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
