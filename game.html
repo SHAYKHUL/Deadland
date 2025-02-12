@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Read Land</title>
+    <title>Dead Land - The Challenge</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
@@ -15,26 +15,36 @@
             text-align: center;
             background: black;
             overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
         }
 
-        /* Background Image */
-        body::before {
-            content: "";
+        /* Background Animation */
+        .fog {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('background.png') no-repeat center center/cover;
-            filter: brightness(30%);
+            background: url('fog.gif') repeat;
+            opacity: 0.2;
             z-index: -1;
+            animation: fogMove 10s infinite linear;
         }
 
-        /* UI Container */
-        .container {
+        @keyframes fogMove {
+            0% { transform: translateX(-10px); }
+            100% { transform: translateX(10px); }
+        }
+
+        /* Game UI */
+        .game-container {
             position: relative;
             max-width: 600px;
-            margin: 80px auto;
             padding: 20px;
             background: rgba(10, 10, 10, 0.9);
             border-radius: 10px;
@@ -42,14 +52,8 @@
             z-index: 2;
         }
 
-        /* Logo */
-        .logo {
-            max-width: 200px;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 10px red);
-        }
-
-        .title {
+        /* Task Title */
+        .task-title {
             font-size: 32px;
             color: red;
             text-shadow: 2px 2px 10px rgba(255, 0, 0, 0.8);
@@ -61,149 +65,141 @@
             100% { text-shadow: 2px -2px 5px red; }
         }
 
-        .messages {
-            font-size: 18px;
-            margin-top: 20px;
-            text-align: left;
-            padding: 10px;
-            height: 250px;
-            overflow-y: auto;
-            border-left: 3px solid red;
-            background: rgba(20, 20, 20, 0.8);
+        /* Task Image */
+        .task-image {
+            width: 100%;
+            max-height: 250px;
             border-radius: 5px;
-        }
-
-        .message {
-            background: rgba(20, 20, 20, 0.9);
-            padding: 8px;
-            margin: 5px 0;
-            border-left: 2px solid red;
-        }
-
-        .input-container {
             margin-top: 15px;
-            display: flex;
-            justify-content: center;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
         }
 
-        .input-field {
+        /* Task Description */
+        .task-text {
+            font-size: 20px;
+            margin-top: 15px;
+            background: rgba(20, 20, 20, 0.8);
             padding: 10px;
-            font-size: 18px;
-            border: 2px solid red;
-            background: black;
-            color: white;
-            width: 75%;
-            text-align: center;
+            border-left: 3px solid red;
             border-radius: 5px;
+            text-align: center;
         }
 
-        .button {
+        /* Task Details */
+        .task-details {
+            font-size: 16px;
+            margin-top: 10px;
+            background: rgba(30, 30, 30, 0.8);
+            padding: 10px;
+            border-left: 3px solid white;
+            border-radius: 5px;
+            text-align: left;
+            color: #ccc;
+        }
+
+        /* Action Button */
+        .action-button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 18px;
             background: red;
             color: white;
             border: none;
-            padding: 10px;
-            font-size: 18px;
-            cursor: pointer;
-            margin-left: 10px;
             border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+            transition: all 0.3s ease;
         }
 
-        .whisper {
-            position: fixed;
-            bottom: 10px;
-            left: 10px;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
-            opacity: 0.3;
-            animation: whisperEffect 3s infinite alternate;
+        .action-button:hover {
+            transform: scale(1.1);
+            background: rgba(255, 0, 0, 0.8);
         }
 
-        @keyframes whisperEffect {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.8; }
+        /* Button Shake Effect */
+        .action-button:active {
+            animation: shake 0.2s ease;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Game Logo -->
-    <img src="deadland-logo.png" alt="Read Land Logo" class="logo">
+    <!-- Fog Effect -->
+    <div class="fog"></div>
 
-    <div class="container">
-        <h1 class="title">The Challenge</h1>
-        <div class="messages" id="messages">
-            <div class="message">[SYSTEM]: Are you ready?</div>
-        </div>
+    <!-- Game UI -->
+    <div class="game-container">
+        <h1 class="task-title" id="taskTitle">Welcome to Dead Land</h1>
+        <img src="room.png" alt="Task Image" class="task-image" id="taskImage">
+        <p class="task-text" id="taskText">Click "Entire" to begin.</p>
+        <p class="task-details" id="taskDetails">They game is based on a true story.A lonely boy, frustrated and isolated, lived in an old house. He was last seen in his room in 2016, staring into a mirror. Days later, he was found dead. No one knows what happened, but some say the mirror holds his final moments. Now, you have found his diary, and the tasks he left behind…
 
-        <div class="input-container">
-            <input type="text" id="userInput" class="input-field" placeholder="Type here...">
-            <button class="button" id="send">Send</button>
-        </div>
+Each task represents a fragment of his tragic story, forcing the player to experience what he went through before his final moments.</p>
+        <button class="action-button" id="nextTask">Entire the room</button>
     </div>
 
-    <div class="whisper" id="whisperText">You can't escape...</div>
-
+    <!-- Background Music -->
     <audio id="backgroundMusic" loop>
         <source src="creepy-music.mp3" type="audio/mpeg">
     </audio>
 
-    <audio id="whisperSound">
-        <source src="whisper.mp3" type="audio/mpeg">
-    </audio>
-
     <script>
-        const messages = [
-            "[SYSTEM]: Welcome to the challenge.",
-            "[SYSTEM]: Type 'I am ready' to continue.",
-            "[SYSTEM]: Task 1 - Find a mirror and smile at yourself.",
-            "[SYSTEM]: Say 'I did it' to continue.",
-            "[SYSTEM]: Task 2 - Write something positive about yourself.",
-            "[SYSTEM]: Task 3 - Take a deep breath and relax.",
-            "[SYSTEM]: Task 4 - Call a friend or family member and say hello.",
-            "[SYSTEM]: Task 5 - Take a break, drink water, and rest."
+        const tasks = [
+            {
+                title: "Task 1: The Mirror Test",
+                text: "Find a mirror and look into your eyes.",
+                details: "Year: 2016. A boy stood before the mirror in his room, staring into his own eyes. He had no one to talk to. The mirror was his only friend. He whispered secrets to it, but one night, the reflection whispered back. He was never the same again.Stand in front of a mirror and stare into your reflection for at least 30 seconds. Notice how you feel. The goal is to become more self-aware and acknowledge your presence. Do you recognize yourself?",
+                image: "task1.png"
+            },
+            {
+                title: "Task 2: The Secret Note",
+                text: "Write something about yourself.",
+                details: "Find a piece of paper and write down one personal thought or memory. It can be something positive or something hidden in your past. Keep this note somewhere safe or destroy it.",
+                image: "task2.png"
+            },
+            {
+                title: "Task 3: Deep Breathing",
+                text: "Take slow, deep breaths for 60 seconds.",
+                details: "Sit in a quiet place and inhale deeply for 5 seconds, hold for 3 seconds, and exhale for 7 seconds. Repeat this for a full minute. Feel your heartbeat slow down and your mind clear.",
+                image: "task3.png"
+            }
         ];
 
         let index = 0;
-        const messageContainer = document.getElementById("messages");
-        const userInput = document.getElementById("userInput");
-        const sendButton = document.getElementById("send");
+        const taskTitle = document.getElementById("taskTitle");
+        const taskText = document.getElementById("taskText");
+        const taskDetails = document.getElementById("taskDetails");
+        const taskImage = document.getElementById("taskImage");
+        const nextTaskButton = document.getElementById("nextTask");
         const backgroundMusic = document.getElementById("backgroundMusic");
-        const whisperSound = document.getElementById("whisperSound");
 
-        function addMessage(text, isPlayer = false) {
-            let newMessage = document.createElement("div");
-            newMessage.classList.add("message");
-            if (isPlayer) newMessage.style.color = "cyan";
-            newMessage.innerHTML = text;
-            messageContainer.appendChild(newMessage);
-            messageContainer.scrollTop = messageContainer.scrollHeight;
+        function loadNextTask() {
+            if (index < tasks.length) {
+                taskTitle.innerText = tasks[index].title;
+                taskText.innerText = tasks[index].text;
+                taskDetails.innerText = tasks[index].details;
+                taskImage.src = tasks[index].image;
+                nextTaskButton.innerText = "Next Task";
+                index++;
+            } else {
+                taskTitle.innerText = "Challenge Completed!";
+                taskText.innerText = "You have successfully completed all tasks.";
+                taskDetails.innerText = "Reflect on what you’ve learned and how you feel. Growth comes from small actions.";
+                taskImage.src = "completed.png";
+                nextTaskButton.style.display = "none";
+            }
         }
 
-        function handleInput() {
-            let userText = userInput.value.trim().toLowerCase();
-            if (!userText) return;
-            addMessage("[YOU]: " + userText, true);
-            userInput.value = "";
-
-            setTimeout(() => {
-                if (userText === "i am ready") {
-                    addMessage(messages[2]);
-                    setTimeout(() => addMessage(messages[3]), 2000);
-                } else if (userText === "i did it" && index < messages.length - 1) {
-                    index++;
-                    addMessage(messages[index]);
-                } else {
-                    addMessage("[SYSTEM]: That is not correct.");
-                }
-            }, 2000);
-        }
-
-        sendButton.addEventListener("click", handleInput);
+        nextTaskButton.addEventListener("click", loadNextTask);
         backgroundMusic.play();
-
-        setInterval(() => {
-            whisperSound.play();
-        }, 20000); // Whisper sound every 20 seconds
     </script>
 
 </body>
